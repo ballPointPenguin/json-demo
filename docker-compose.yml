@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  db:
+    image: "postgres"
+    environment:
+      POSTGRES_PASSWORD: supersecretsauce
+    ports:
+      - 5432:5432
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
+volumes:
+  dbdata:
