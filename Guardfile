@@ -51,6 +51,7 @@ guard :rspec, cmd: "bundle exec rspec" do
     [
       rspec.spec.call("routing/#{m[1]}_routing"),
       rspec.spec.call("controllers/#{m[1]}_controller"),
+      rspec.spec.call("requests/#{m[1]}_request"),
       rspec.spec.call("acceptance/#{m[1]}")
     ]
   end
@@ -58,7 +59,13 @@ guard :rspec, cmd: "bundle exec rspec" do
   # Rails config changes
   watch(rails.spec_helper)     { rspec.spec_dir }
   watch(rails.routes)          { "#{rspec.spec_dir}/routing" }
-  watch(rails.app_controller)  { "#{rspec.spec_dir}/controllers" }
+
+  watch(rails.app_controller) do
+    [
+      "#{rspec.spec_dir}/controllers" }
+      "#{rspec.spec_dir}/requests" }
+    ]
+  end
 
   # Capybara features specs
   watch(rails.view_dirs)     { |m| rspec.spec.call("features/#{m[1]}") }
@@ -68,5 +75,10 @@ guard :rspec, cmd: "bundle exec rspec" do
   watch(%r{^spec/acceptance/(.+)\.feature$})
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$}) do |m|
     Dir[File.join("**/#{m[1]}.feature")][0] || "spec/acceptance"
+  end
+
+  # FactoryBot Factories
+  watch(%r{^spec/factories/(.+)\.rb$}) do |m|
+    rspec.spec.call("models/#{m[1]}")
   end
 end
