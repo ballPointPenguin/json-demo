@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :interest do
     transient do
-      done { Fake::Boolean.boolean }
+      done { Faker::Boolean.boolean }
       has_comment { Faker::Boolean.boolean }
     end
 

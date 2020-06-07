@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :user do
     transient do
-      link_count { Fake::Number.within(range: 0..3) }
+      link_count { Faker::Number.within(range: 0..3) }
     end
 
     age { Faker::Number.within(range: 18..80) }
@@ -13,8 +13,8 @@ FactoryBot.define do
     gender { Faker::Gender.type }
     links { link_count.times.map { Faker::Internet.url } }
     name { Faker::Name.name }
-    password { Faker::Internet.password(min_length: 8, max_length: 32) }
-    password_confirmation { "#{password}" }
+    # password { Faker::Internet.password(min_length: 8, max_length: 32) }
+    # password_confirmation { "#{password}" }
     state { Faker::Address.state_abbr }
   end
 end
