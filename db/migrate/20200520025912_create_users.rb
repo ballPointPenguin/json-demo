@@ -10,7 +10,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
 
       t.string :city
       t.string :country
-      t.string :email, unique: true
+      t.string :email, null: false
       t.string :gender
       t.string :links, array: true
       t.string :name
@@ -18,8 +18,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
 
       t.timestamps
 
-      t.index :email
-      t.index :links, using: "gin"
+      t.index :email, unique: true
     end
   end
 end
