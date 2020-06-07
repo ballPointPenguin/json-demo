@@ -28,3 +28,8 @@
 
 # Ignore simplecov reports
 coverage
+
+# RSpec
+.rspec-local
+spec/examples.txt
+specs.out
