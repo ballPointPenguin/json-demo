@@ -56,12 +56,14 @@ ActiveRecord::Schema.define(version: 2020_05_20_030945) do
     t.integer "age"
     t.string "city"
     t.string "country"
+    t.string "email"
     t.string "gender"
     t.string "links", array: true
     t.string "name"
     t.string "state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email"
     t.index ["links"], name: "index_users_on_links", using: :gin
   end
 
