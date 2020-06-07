@@ -62,8 +62,8 @@ guard :rspec, cmd: "bundle exec rspec" do
 
   watch(rails.app_controller) do
     [
-      "#{rspec.spec_dir}/controllers" }
-      "#{rspec.spec_dir}/requests" }
+      "#{rspec.spec_dir}/controllers",
+      "#{rspec.spec_dir}/requests"
     ]
   end
 
