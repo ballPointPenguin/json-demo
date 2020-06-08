@@ -27,6 +27,7 @@
 #  * 'just' rspec: 'rspec'
 
 guard :rspec, cmd: "bundle exec rspec" do
+  require "active_support/inflector"
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 
@@ -80,5 +81,15 @@ guard :rspec, cmd: "bundle exec rspec" do
   # FactoryBot Factories
   watch(%r{^spec/factories/(.+)\.rb$}) do |m|
     rspec.spec.call("models/#{m[1]}")
+  end
+
+  # Shared Examples Folders
+  watch(%r{^spec/shared_examples/(.+)/.+\.rb$}) do |m|
+    "#{rspec.spec_dir}/#{m[1]}"
+  end
+
+  # Resources
+  watch(%r{^app/resources/(.+)_resource.rb$}) do |m|
+    rspec.spec.call("requests/#{m[1].pluralize}_request")
   end
 end
