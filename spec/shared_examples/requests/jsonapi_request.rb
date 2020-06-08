@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "jsonapi request" do |model|
+RSpec.shared_examples "jsonapi request" do |model, update_key, update_val|
   let (:model_name) { model.model_name }
   let (:name_sym) { model_name.singular.to_sym }
 
@@ -74,6 +74,51 @@ RSpec.shared_examples "jsonapi request" do |model|
       it "creates a database record" do
         expect { make_request }.to change { model.count }.by(1)
         expect(response).to have_http_status(:created)
+      end
+    end
+  end
+
+  describe "PATCH#update" do
+    subject(:make_request) do
+      patch "/#{model_name.route_key}/#{record.id}", params: params, as: :json
+    end
+
+    describe "update the title" do
+      let (:record) { create(name_sym) }
+      let (:update_attr) { { update_key => update_val } }
+
+      let (:params) do
+        {
+          "data": {
+            "id": record.id.to_s,
+            "type": model_name.collection,
+            "attributes": update_attr
+          }
+        }
+      end
+
+
+      it "updates the resource" do
+        make_request
+
+        expect(response).to have_http_status(:success)
+        expect(record.reload[update_key]).to eq(update_val)
+      end
+    end
+  end
+
+  describe "DELETE#destroy" do
+    subject(:make_request) do
+      delete "/#{model_name.route_key}/#{record.id}", as: :json
+    end
+
+    describe "basic destroy" do
+      let!(:record) { create(name_sym) }
+
+      it "destroys the resource" do
+        expect { make_request }.to change { model.count }.by(-1)
+        expect(response).to have_http_status(:no_content)
+        expect { record.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
