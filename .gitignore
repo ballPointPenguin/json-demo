@@ -33,3 +33,4 @@ coverage
 .rspec-local
 spec/examples.txt
 specs.out
+sendgrid.env
