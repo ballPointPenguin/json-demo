@@ -43,34 +43,34 @@ RSpec.describe User, type: :model do
     }.to raise_error(ActiveRecord::RecordInvalid)
   end
 
-  # it "is valid with only email and password" do
-  #   User.create(
-  #     email: "valid@email",
-  #     password: "verycryptic",
-  #     password_confirmation: "verycryptic"
-  #   )
+  it "is valid with only email and password" do
+    User.create(
+      email: "valid@email.co",
+      password: "verycryptic",
+      # password_confirmation: "verycryptic"
+    )
 
-  #   expect(User.count).to be(1)
-  # end
+    expect(User.count).to be(1)
+  end
 
-  # it "is not admin by default" do
-  #   user = User.create(
-  #     email: "valid@email",
-  #     password: "verycryptic",
-  #     password_confirmation: "verycryptic"
-  #   )
+  it "is not admin by default" do
+    user = User.create(
+      email: "valid@email.co",
+      password: "verycryptic",
+      # password_confirmation: "verycryptic"
+    )
 
-  #   expect(user.is_admin).to be(false)
-  # end
+    expect(user.is_admin).to be(false)
+  end
 
-  # it "can be an admin" do
-  #   user = User.create(
-  #     email: "valid@email",
-  #     is_admin: true,
-  #     password: "verycryptic",
-  #     password_confirmation: "verycryptic"
-  #   )
+  it "can be an admin" do
+    user = User.create(
+      email: "valid@email.co",
+      is_admin: true,
+      password: "verycryptic",
+      # password_confirmation: "verycryptic"
+    )
 
-  #   expect(user.is_admin).to be(true)
-  # end
+    expect(user.is_admin).to be(true)
+  end
 end
