@@ -13,7 +13,7 @@ FactoryBot.define do
     gender { Faker::Gender.type }
     links { link_count.times.map { Faker::Internet.url } }
     name { Faker::Name.name }
-    # password { Faker::Internet.password(min_length: 8, max_length: 32) }
+    password { Faker::Internet.password(min_length: 8, max_length: 32) }
     # password_confirmation { "#{password}" }
     state { Faker::Address.state_abbr }
   end
