@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class ActivitiesController < ApplicationController
+class ActivitiesController < ApiController
 end
