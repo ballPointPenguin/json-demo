@@ -9,17 +9,17 @@ RSpec.describe User, type: :model do
     expect(User.count).to be(1)
   end
 
-  # it "must have password_confirmation" do
-  #   expect {
-  #     create(:user, password_confirmation: nil)
-  #   }.to raise_error(ActiveRecord::RecordInvalid)
-  # end
+  it "must have password_confirmation" do
+    expect {
+      create(:user, password_confirmation: nil)
+    }.to raise_error(ActiveRecord::RecordInvalid)
+  end
 
-  # it "must have a matching password_confirmation" do
-  #   expect {
-  #     create(:user, password: "secretsauce", password_confirmation: "ooppwhat")
-  #   }.to raise_error(ActiveRecord::RecordInvalid)
-  # end
+  it "must have a matching password_confirmation" do
+    expect {
+      create(:user, password: "secretsauce", password_confirmation: "ooppwhat")
+    }.to raise_error(ActiveRecord::RecordInvalid)
+  end
 
   it "must have a valid email" do
     expect {
@@ -47,7 +47,7 @@ RSpec.describe User, type: :model do
     User.create(
       email: "valid@email.co",
       password: "verycryptic",
-      # password_confirmation: "verycryptic"
+      password_confirmation: "verycryptic"
     )
 
     expect(User.count).to be(1)
@@ -57,7 +57,7 @@ RSpec.describe User, type: :model do
     user = User.create(
       email: "valid@email.co",
       password: "verycryptic",
-      # password_confirmation: "verycryptic"
+      password_confirmation: "verycryptic"
     )
 
     expect(user.is_admin).to be(false)
@@ -68,7 +68,7 @@ RSpec.describe User, type: :model do
       email: "valid@email.co",
       is_admin: true,
       password: "verycryptic",
-      # password_confirmation: "verycryptic"
+      password_confirmation: "verycryptic"
     )
 
     expect(user.is_admin).to be(true)
