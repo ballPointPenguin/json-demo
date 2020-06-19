@@ -8,4 +8,8 @@ module RequestSpecHelper
   def jsonapi_data
     JSON.parse(response.body).deep_symbolize_keys[:data]
   end
+
+  def jsonapi_errors
+    JSON.parse(response.body).deep_symbolize_keys[:errors]
+  end
 end
