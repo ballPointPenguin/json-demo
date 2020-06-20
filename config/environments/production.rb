@@ -62,9 +62,9 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # https://devise-token-auth.gitbook.io/devise-token-auth/config/email_auth
-  config.action_mailer.default_url_options = { host: ENV["SENDGRID_HOST"] }
+  config.action_mailer.default_url_options = { host: ENV['DOMAIN_NAME'] }
   config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = { address: ENV['SENDGRID_HOST'], port: 1025 }
+  config.action_mailer.smtp_settings = { address: ENV['SMTP_ADDRESS'], port: ENV['SMTP_PORT'] }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
