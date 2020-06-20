@@ -15,4 +15,13 @@ class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :email, presence: true, uniqueness: true
   validates :password_confirmation, presence: true, on: :create
+
+  # Needed to add these in to avoid PG::UniqueViolation Error
+  before_save :sync_uid
+  before_create :sync_uid
+
+  protected
+    def sync_uid
+      self.uid = email
+    end
 end

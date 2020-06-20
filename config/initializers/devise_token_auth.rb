@@ -56,5 +56,15 @@ DeviseTokenAuth.setup do |config|
   # config.enable_standard_devise_support = false
 
   # https://maicolben.gitbooks.io/devise-token-auth/docs/config/initialization.html
-  config.default_confirm_success_url = "#{ENV['SENDGRID_HOST']}/confirmation"
+  config.default_confirm_success_url = "#{ENV['HOST']}/confirmation"
+  config.default_password_reset_url = "#{ENV['HOST']}/password_reset"
+
+  # By default, old tokens are not invalidated when password is changed. Enable
+  # this option if you want to make passwords updates to logout other devices.
+  config.remove_tokens_after_password_reset = true
+
+  # By default DeviseTokenAuth will not send confirmation email, even when
+  # including devise confirmable module. If you want to use devise confirmable
+  # module and send email, set it to true. (This is a setting for compatibility)
+  config.send_confirmation_email = true
 end

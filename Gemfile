@@ -9,7 +9,9 @@ gem "rails", "~> 6.0.3", ">= 6.0.3.1"
 
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", ">= 1.4.2", require: false
-gem "devise_token_auth"
+gem "devise_token_auth",
+  git: "https://github.com/lynndylanhurley/devise_token_auth.git",
+  ref: "849c244"
 gem "jsonapi-utils", "~> 0.7.3"
 gem "pg", ">= 0.18", "< 2.0"
 gem "pry-rails"
