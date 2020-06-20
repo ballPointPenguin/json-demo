@@ -53,16 +53,4 @@ RSpec.describe "Registrations", type: :request do
       end
     end
   end
-
-  describe "user_registration #destroy", :skip do
-    subject(:make_request) do
-      delete "/auth", params: params
-    end
-  end
-
-  describe "user_registration PATCH#update", :skip do
-    subject(:make_request) do
-      patch "/auth", params: params
-    end
-  end
 end

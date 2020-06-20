@@ -3,15 +3,15 @@
 require "rails_helper"
 
 RSpec.describe "Sessions", type: :request do
+  let(:user) do
+    user = create(:user, password: "secretstuff")
+    user.confirm
+    user
+  end
+
   describe "user_session #create" do
     subject(:make_request) do
       post "/auth/sign_in", params: params
-    end
-
-    let(:user) do
-      user = create(:user, password: "secretstuff")
-      user.confirm
-      user
     end
 
     context "valid params" do
@@ -55,8 +55,8 @@ RSpec.describe "Sessions", type: :request do
 
     context "non-existent user" do
       let (:params) { {
-        email: "nobody@example.foo",
-        password: "something"
+        email: Faker::Internet.email,
+        password: Faker::Internet.password
       } }
 
       it "returns an error" do
@@ -69,15 +69,25 @@ RSpec.describe "Sessions", type: :request do
     end
   end
 
-  # describe "user_session #destroy", :skip do
-  #   subject(:make_request) do
-  #     delete "/auth/sign_out", params: params
-  #   end
-  # end
+  describe "user_session #destroy" do
+    subject(:make_request) do
+      delete "/auth/sign_out", headers: @headers
+    end
 
-  # describe "user_session PATCH#update", :skip do
-  #   subject(:make_request) do
-  #     get "/auth/sign_in", params: params
-  #   end
-  # end
+    before do
+      post "/auth/sign_in", params: { email: user.email, password: user.password }
+
+      @headers = {
+        "access-token" => response.headers["access-token"],
+        "client" => response.headers["client"],
+        "uid" => response.headers["uid"]
+      }
+    end
+
+    it "is successful" do
+      make_request
+
+      expect(response).to have_http_status(:success)
+    end
+  end
 end
