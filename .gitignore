@@ -35,4 +35,7 @@ spec/examples.txt
 specs.out
 
 # DotEnv
-.env
+.env.development.local
+.env.test.local
+.env.productoin.local
+.env.local
