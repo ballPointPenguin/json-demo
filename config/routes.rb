@@ -3,11 +3,8 @@
 Rails.application.routes.draw do
   mount_devise_token_auth_for "User", at: "auth"
 
-  as :user do
-    # Define routes for User within this block.
-    jsonapi_resources :activities
-    jsonapi_resources :interests
-    jsonapi_resources :tags
-    jsonapi_resources :users
-  end
+  jsonapi_resources :activities
+  jsonapi_resources :interests
+  jsonapi_resources :tags
+  jsonapi_resources :users
 end

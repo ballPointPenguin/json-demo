@@ -28,4 +28,9 @@ module RequestSpecHelper
   def jsonapi_errors
     JSON.parse(response.body).deep_symbolize_keys[:errors]
   end
+
+  def dasherize_hash(hash)
+    hash.map { |k, v| { k.to_s.dasherize => v } }
+      .reduce Hash.new, :merge
+  end
 end

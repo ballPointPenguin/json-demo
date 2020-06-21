@@ -45,33 +45,29 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "jsonapi POST#create auth" do |model|
-    let (:model_name) { model.model_name }
-    let (:name_sym) { model_name.singular.to_sym }
-
+  describe "jsonapi POST#create auth" do
     subject(:make_request) do
-      post "/#{model_name.route_key}",
-        params: params, as: :json, headers: @headers
+      post "/users", params: params, as: :json, headers: @headers
     end
 
     context "signed in user" do
       before { @headers = sign_in_user }
 
       describe "basic create record" do
-        let (:attrs)  { attributes_for(name_sym) }
-        let (:related) { attributes_for_related(name_sym) }
+        let (:attrs)  { attributes_for(:user) }
+        let (:related) { attributes_for_related(:user) }
         let (:params) do
           {
             "data": {
-              "type": model_name.collection,
-              "attributes": attrs,
+              "type": "users",
+              "attributes": dasherize_hash(attrs),
               "relationships": related
             }
           }
         end
 
         it "creates a database record" do
-          expect { make_request }.to change { model.count }.by(1)
+          expect { make_request }.to change { User.count }.by(1)
           expect(response).to have_http_status(:created)
         end
       end

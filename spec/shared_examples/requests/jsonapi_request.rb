@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "jsonapi GET#index auth", :focus do |model|
+RSpec.shared_examples "jsonapi GET#index auth" do |model|
   let (:model_name) { model.model_name }
   let (:name_sym) { model_name.singular.to_sym }
 
@@ -35,7 +35,7 @@ RSpec.shared_examples "jsonapi GET#index auth", :focus do |model|
   end
 end
 
-RSpec.shared_examples "jsonapi GET#show auth", :focus do |model|
+RSpec.shared_examples "jsonapi GET#show auth" do |model|
   let (:model_name) { model.model_name }
   let (:name_sym) { model_name.singular.to_sym }
 
@@ -107,7 +107,7 @@ RSpec.shared_examples "jsonapi PATCH#update auth" do
 
   subject(:make_request) do
     patch "/#{model_name.route_key}/#{record.id}",
-      params: params, headers: @headers
+      params: params, headers: @headers, as: :json
   end
 
   context "signed in user" do
@@ -156,7 +156,6 @@ RSpec.shared_examples "jsonapi DELETE#destroy auth" do |model|
       it "destroys the resource" do
         expect { make_request }.to change { model.count }.by(-1)
         expect(response).to have_http_status(:no_content)
-        expect(response.content_type).to eq("application/vnd.api+json")
         expect { record.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
