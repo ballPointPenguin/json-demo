@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include DeviseTokenAuth::Concerns::User
-
   # Include default devise modules, Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :confirmable # seems like this is set regardless of it being here
+         :recoverable, :rememberable, :validatable, :confirmable
+
+  # note that this include statement comes AFTER the devise block above
+  include DeviseTokenAuth::Concerns::User
 
   has_many :interests, dependent: :destroy
   has_many :activities, through: :interests
