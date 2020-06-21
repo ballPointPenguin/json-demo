@@ -9,12 +9,14 @@ RSpec.describe "Registrations", type: :request do
     end
 
     context "valid params" do
-      let (:params) { attributes_for(:user).slice(:email, :password, :password_confirmation) }
+      let (:params) { attributes_for(:user)
+        .slice(:email, :password, :password_confirmation) }
 
       it "returns successfully" do
         make_request
 
-        expect(response.content_type).to eq("application/vnd.api+json; charset=utf-8")
+        expect(response.content_type)
+          .to eq("application/vnd.api+json; charset=utf-8")
         expect(response).to have_http_status(:success)
       end
 
@@ -42,7 +44,8 @@ RSpec.describe "Registrations", type: :request do
       it "returns an error" do
         make_request
 
-        expect(response.content_type).to eq("application/vnd.api+json; charset=utf-8")
+        expect(response.content_type)
+          .to eq("application/vnd.api+json; charset=utf-8")
         expect(response).to have_http_status(:unprocessable_entity)
         expect(jsonapi_errors).to be_present
         expect(jsonapi_errors.keys).to contain_exactly(:email, :full_messages)

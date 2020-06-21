@@ -20,8 +20,7 @@ RSpec.shared_examples "jsonapi GET#index auth" do |model|
       it "returns a jsonapi collection" do
         make_request
 
-        expect(response.content_type)
-          .to eq("application/vnd.api+json")
+        expect(response.content_type).to start_with("application/vnd.api+json")
         expect(response).to have_http_status(:success)
         expect(jsonapi_data.size).to eql(2)
 
@@ -54,7 +53,7 @@ RSpec.shared_examples "jsonapi GET#show auth" do |model|
       it "returns a jsonapi object" do
         make_request
 
-        expect(response.content_type).to eq("application/vnd.api+json")
+        expect(response.content_type).to start_with("application/vnd.api+json")
         expect(response).to have_http_status(:success)
         expect(jsonapi_data).to be_a(Hash)
 
@@ -92,7 +91,7 @@ RSpec.shared_examples "jsonapi POST#create auth" do |model|
 
       it "creates a database record" do
         expect { make_request }.to change { model.count }.by(1)
-        expect(response.content_type).to eq("application/vnd.api+json")
+        expect(response.content_type).to start_with("application/vnd.api+json")
         expect(response).to have_http_status(:created)
       end
     end
@@ -132,7 +131,7 @@ RSpec.shared_examples "jsonapi PATCH#update auth" do
         make_request
 
         expect(response).to have_http_status(:success)
-        expect(response.content_type).to eq("application/vnd.api+json")
+        expect(response.content_type).to start_with("application/vnd.api+json")
         expect(record.reload[update_key]).to eq(update_val)
       end
     end
@@ -159,5 +158,16 @@ RSpec.shared_examples "jsonapi DELETE#destroy auth" do |model|
         expect { record.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
+  end
+end
+
+RSpec.shared_examples "unauthorized request" do
+  it "returns a jsonapi unauthorized error" do
+    expect(response.content_type).to start_with("application/vnd.api+json")
+    expect(response).to have_http_status(:unauthorized)
+    expect(jsonapi_data).not_to be_present
+    expect(jsonapi_errors).to be_present
+    expect(jsonapi_errors)
+      .to eq(["You need to sign in or sign up before continuing."])
   end
 end

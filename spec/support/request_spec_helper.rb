@@ -12,9 +12,13 @@ module RequestSpecHelper
   end
 
   def sign_in_user
-    user = create(:user)
-    user.confirm
+    user = create(:confirmed_user)
     sign_in(user)
+  end
+
+  def sign_in_admin
+    admin = create(:admin)
+    sign_in(admin)
   end
 
   def sign_out(headers)

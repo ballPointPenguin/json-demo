@@ -16,5 +16,14 @@ FactoryBot.define do
     password { Faker::Internet.password(min_length: 8, max_length: 32) }
     password_confirmation { "#{password}" }
     state { Faker::Address.state_abbr }
+
+    factory :confirmed_user do
+      after(:create) { |user| user.confirm }
+    end
+
+    factory :admin do
+      is_admin { true }
+      after(:create) { |user| user.confirm }
+    end
   end
 end
