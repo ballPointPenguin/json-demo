@@ -5,10 +5,9 @@ Rails.application.routes.draw do
 
   as :user do
     # Define routes for User within this block.
+    jsonapi_resources :activities
+    jsonapi_resources :interests
+    jsonapi_resources :tags
+    jsonapi_resources :users
   end
-
-  jsonapi_resources :activities
-  jsonapi_resources :interests
-  jsonapi_resources :tags
-  jsonapi_resources :users
 end

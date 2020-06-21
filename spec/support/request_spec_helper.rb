@@ -1,9 +1,25 @@
 # frozen_string_literal: true
 
 module RequestSpecHelper
-  # include Warden::Test::Helpers
+  def sign_in(user)
+    post "/auth/sign_in", params: { email: user.email, password: user.password }
 
-  # TODO pull from https://github.com/heartcombo/devise/wiki/How-To:-sign-in-and-out-a-user-in-Request-type-specs-(specs-tagged-with-type:-:request)
+    @headers = {
+      "access-token" => response.headers["access-token"],
+      "client" => response.headers["client"],
+      "uid" => response.headers["uid"]
+    }
+  end
+
+  def sign_in_user
+    user = create(:user)
+    user.confirm
+    sign_in(user)
+  end
+
+  def sign_out(headers)
+    delete "/auth/sign_out", headers: headers
+  end
 
   def jsonapi_data
     JSON.parse(response.body).deep_symbolize_keys[:data]
