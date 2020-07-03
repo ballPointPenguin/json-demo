@@ -9,4 +9,11 @@ class UsersController < ApiController
     users = User.accessible_by(current_ability)
     jsonapi_render json: users
   end
+
+  # GET /users/:id
+  def show
+    user = User.find(params[:id])
+    authorize! :show, user
+    jsonapi_render json: user
+  end
 end

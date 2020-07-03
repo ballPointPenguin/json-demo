@@ -161,6 +161,18 @@ RSpec.shared_examples "jsonapi DELETE#destroy auth" do |model|
   end
 end
 
+RSpec.shared_examples "forbidden request" do
+  it "returns a jsonapi forbidden error" do
+    expect(response.content_type).to start_with("application/vnd.api+json")
+    expect(response).to have_http_status(:forbidden)
+    expect(jsonapi_data).not_to be_present
+    expect(jsonapi_errors).to be_present
+    expect(jsonapi_errors).to be_an(Array)
+    expect(jsonapi_errors.length).to eq(1)
+    expect(jsonapi_errors.first).to include(:code => "403")
+  end
+end
+
 RSpec.shared_examples "unauthorized request" do
   it "returns a jsonapi unauthorized error" do
     expect(response.content_type).to start_with("application/vnd.api+json")
@@ -169,5 +181,14 @@ RSpec.shared_examples "unauthorized request" do
     expect(jsonapi_errors).to be_present
     expect(jsonapi_errors)
       .to eq(["You need to sign in or sign up before continuing."])
+  end
+end
+
+RSpec.shared_examples "successful request" do
+  it "returns jsonapi data" do
+    expect(response.content_type).to start_with("application/vnd.api+json")
+    expect(response).to have_http_status(:success)
+    expect(jsonapi_data).to be_present
+    expect(jsonapi_errors).not_to be_present
   end
 end
