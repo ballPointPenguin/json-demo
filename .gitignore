@@ -40,3 +40,7 @@ specs.out
 .env.production.local
 .env.staging.local
 .env.test.local
+
+# Ignore special env seed files
+/db/seeds/stage.rb
+/db/seeds/prod.rb
