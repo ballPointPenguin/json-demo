@@ -1,0 +1,39 @@
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+# Ignore uploaded files in development.
+/storage/*
+!/storage/.keep
+.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# Ignore simplecov reports
+coverage
+
+# RSpec
+.rspec-local
+spec/examples.txt
+specs.out
+
+# DotEnv
+.env.development.local
+.env.local
+.env.production.local
+.env.staging.local
+.env.test.local
+
+# Ignore git files
+/.git
