@@ -1,3 +1,10 @@
 inherit_gem:
   rubocop-rails_config:
     - config/rails.yml
+
+# Override Settings
+AllCops:
+  TargetRubyVersion: 2.7
+
+Layout/LineLength:
+  Max: 80
