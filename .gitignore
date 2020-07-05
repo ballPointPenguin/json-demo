@@ -36,6 +36,7 @@ specs.out
 
 # DotEnv
 .env.development.local
-.env.test.local
-.env.productoin.local
 .env.local
+.env.production.local
+.env.staging.local
+.env.test.local
